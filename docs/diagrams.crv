@@ -49,8 +49,9 @@ sequenceDiagram
 ```
 
 The same numbers as the table on the Blocks page, drawn by Chart.js. This block
-carries no caption on purpose: a caption currently disables the preset and the
-diagram falls back to source (markup-carve/carve#1444).
+carries no caption on purpose: in carve-rs a caption currently disables the
+preset and the diagram falls back to source (markup-carve/carve-rs#1151).
+carve-js and carve-php render it correctly.
 
 ## Vega-Lite
 
