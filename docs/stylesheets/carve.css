@@ -1,0 +1,265 @@
+/* Styling for the Carve constructs the Material theme does not know about.
+ *
+ * Everything here is scoped under .md-typeset so it inherits the theme's type
+ * scale, spacing rhythm and colour tokens rather than inventing a second design.
+ * Where Material already has a token for a thing (accent, code background,
+ * default fg), it is used instead of a literal, so both colour schemes work. */
+
+/* --- Duplicate permalinks -------------------------------------------------
+ * With every extension on, Carve's heading-permalinks adds a ¶ and Zensical's
+ * toc.permalink adds one too. Hide Carve's; the theme's is the one wired to
+ * the anchor behaviour and the hover reveal. */
+.md-typeset .permalink {
+  display: none;
+}
+
+/* --- The extension's own table of contents ------------------------------
+ * Enabling every extension turns on `table-of-contents`, which inserts a
+ * <nav class="toc"> at the top of the page. The theme's sidebar table of
+ * contents is already there and is the one wired to scroll-spy, so the in-body
+ * copy is redundant here. It is hidden rather than switched off so the page
+ * still demonstrates that the extension ran. */
+.md-typeset nav.toc {
+  display: none;
+}
+
+/* --- Tabs -----------------------------------------------------------------
+ * The tabs extension builds radio inputs with its own class names, which the
+ * theme's tab CSS does not target. This is the whole widget. */
+.md-typeset .tabs {
+  margin: 1.2em 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  overflow: hidden;
+}
+.md-typeset .tabs-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.md-typeset .tabs-label,
+.md-typeset .tabs > label {
+  display: inline-block;
+  padding: 0.55em 1.1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--md-default-fg-color--light);
+  border-bottom: 2px solid transparent;
+  transition: color 125ms, border-color 125ms;
+}
+.md-typeset .tabs > label:hover {
+  color: var(--md-accent-fg-color);
+}
+.md-typeset .tabs-panel,
+.md-typeset .tabs > div {
+  display: none;
+  padding: 0.4rem 1.1em 0.8em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset .tabs-radio:checked + label {
+  color: var(--md-accent-fg-color);
+  border-bottom-color: var(--md-accent-fg-color);
+}
+/* The extension emits every input and label FIRST, then every panel, so the
+ * panel is a GENERAL sibling of its radio rather than an adjacent one. Pair
+ * them by position: inputs are the only <input> children and panels the only
+ * <div> children, so nth-of-type lines them up. Six is arbitrary and enough. */
+.md-typeset .tabs > input:nth-of-type(1):checked ~ div:nth-of-type(1),
+.md-typeset .tabs > input:nth-of-type(2):checked ~ div:nth-of-type(2),
+.md-typeset .tabs > input:nth-of-type(3):checked ~ div:nth-of-type(3),
+.md-typeset .tabs > input:nth-of-type(4):checked ~ div:nth-of-type(4),
+.md-typeset .tabs > input:nth-of-type(5):checked ~ div:nth-of-type(5),
+.md-typeset .tabs > input:nth-of-type(6):checked ~ div:nth-of-type(6) {
+  display: block;
+}
+
+/* --- Spoiler --------------------------------------------------------------
+ * Hidden until hover or focus, and readable when revealed. */
+.md-typeset .spoiler {
+  background: var(--md-default-fg-color);
+  color: transparent;
+  border-radius: 0.1rem;
+  padding: 0 0.2em;
+  cursor: pointer;
+  transition: color 125ms, background-color 125ms;
+}
+.md-typeset .spoiler:hover,
+.md-typeset .spoiler:focus,
+.md-typeset .spoiler:active {
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+
+/* --- Colour swatch ---------------------------------------------------------
+ * The extension emits its own `<span class="swatch-chip" style="background-…">`,
+ * so the chip only needs a size and a border - inventing a ::before here would
+ * have drawn a second one in the wrong colour. */
+.md-typeset .swatch {
+  white-space: nowrap;
+}
+.md-typeset .swatch-chip {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 0.25em;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.15em;
+  vertical-align: -0.05em;
+}
+
+/* --- Table captions -------------------------------------------------------
+ * Carve emits a real <caption>. The theme has no rule for one, so it lands
+ * unstyled above the table. */
+.md-typeset table caption,
+.md-typeset figure figcaption {
+  caption-side: bottom;
+  padding-top: 0.6em;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+  text-align: left;
+}
+
+/* --- Callout list ---------------------------------------------------------
+ * The numbered list bound to <n> markers in a code block. */
+.md-typeset .callout-list,
+.md-typeset ol.callouts {
+  margin-top: 0.4rem;
+  padding-left: 1.4em;
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+  border-left: 2px solid var(--md-accent-fg-color);
+}
+.md-typeset .callout {
+  display: inline-block;
+  min-width: 1.3em;
+  text-align: center;
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color, #fff);
+  border-radius: 1em;
+  font-size: 0.7em;
+  font-weight: 700;
+  padding: 0 0.35em;
+}
+
+/* --- Line blocks ----------------------------------------------------------
+ * Meaningful indentation and line endings, so whitespace has to survive. */
+.md-typeset .line-block {
+  white-space: pre-wrap;
+  font-family: var(--md-text-font-family);
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+  padding-left: 0.9em;
+  margin: 1em 0;
+  color: var(--md-default-fg-color--light);
+}
+
+/* --- Semantic spans -------------------------------------------------------
+ * <kbd> gets theme styling already; the other six do not all read as distinct. */
+.md-typeset var,
+.md-typeset samp {
+  font-family: var(--md-code-font-family);
+  font-size: 0.85em;
+  background: var(--md-code-bg-color);
+  border-radius: 0.1rem;
+  padding: 0 0.25em;
+}
+.md-typeset dfn {
+  font-style: normal;
+  border-bottom: 1px dotted var(--md-default-fg-color--light);
+  cursor: help;
+}
+
+/* --- Glossary and index ---------------------------------------------------- */
+.md-typeset .glossary,
+.md-typeset .index-list {
+  border-left: 2px solid var(--md-accent-fg-color);
+  padding: 0.2rem 0 0.2rem 1em;
+  margin: 1.2em 0;
+}
+.md-typeset .term {
+  border-bottom: 1px dashed var(--md-accent-fg-color);
+}
+
+/* --- Citations ------------------------------------------------------------- */
+.md-typeset a[data-cite-key] {
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+.md-typeset .references,
+.md-typeset .bibliography {
+  font-size: 0.78rem;
+}
+
+/* --- Diagram hydration targets --------------------------------------------
+ * Before a client library runs, these are preformatted source. Give them a
+ * neutral frame so a page without JavaScript still looks deliberate, and
+ * centre the drawn output afterwards. */
+.md-typeset pre.mermaid,
+.md-typeset pre.d2,
+.md-typeset pre.graphviz,
+.md-typeset pre.plantuml,
+.md-typeset pre.wavedrom,
+.md-typeset pre.abc,
+.md-typeset div.chart,
+.md-typeset div.vega-lite {
+  margin: 1.2em 0;
+  padding: 1em;
+  background: var(--md-code-bg-color);
+  border-radius: 0.2rem;
+  text-align: center;
+  overflow-x: auto;
+}
+.md-typeset pre.mermaid[data-processed] {
+  background: transparent;
+  padding: 0;
+}
+.md-typeset div.chart,
+.md-typeset div.vega-lite {
+  text-align: left;
+}
+.md-typeset div.vega-lite .vega-embed,
+.md-typeset div.vega-lite canvas,
+.md-typeset div.vega-lite svg {
+  max-width: 100%;
+}
+.md-typeset div.chart > canvas {
+  max-width: 100%;
+}
+/* A preset with no client library on the page stays source, and says so. */
+.md-typeset pre.wavedrom,
+.md-typeset pre.abc,
+.md-typeset pre.plantuml,
+.md-typeset pre.d2 {
+  text-align: left;
+  font-family: var(--md-code-font-family);
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+  border: 1px dashed var(--md-default-fg-color--lighter);
+}
+
+/* --- Math ------------------------------------------------------------------
+ * The math-block extension emits a span for both forms, so the display one has
+ * to be told it is a block or it sits inline with the paragraph around it. */
+.md-typeset .math.display {
+  display: block;
+  text-align: center;
+  margin: 1.2em 0;
+  overflow-x: auto;
+}
+
+/* MathJax renders a visually-hidden MathML twin for screen readers. It is only
+ * hidden by MathJax's own stylesheet rule, and when that does not win the twin
+ * shows up as raw TeX beside the typeset formula. Pinning it here is cheap
+ * insurance and keeps the accessibility copy in the tree. */
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0 0 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+  display: block !important;
+}

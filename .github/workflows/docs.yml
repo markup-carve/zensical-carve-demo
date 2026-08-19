@@ -1,0 +1,48 @@
+name: Build and deploy the demo
+on:
+  push:
+    branches:
+      - master
+      - main
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/configure-pages@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.x
+      - run: pip install zensical zensical-carve
+
+      # Renders every .crv page with every Carve extension enabled, then builds.
+      # The extension list is read from the engine in build.sh, so a Carve
+      # release that adds one turns it on here without a change to this file.
+      - run: ./build.sh
+
+      # A build that produces no pages still exits 0, and a missing extension
+      # only shows as absent output. Both would deploy a quietly broken site.
+      - name: Check the pages rendered, and the extensions ran
+        run: |
+          set -euo pipefail
+          for page in index blocks/index diagrams/index reference/index; do
+            test -f "site/${page}.html" || { echo "missing site/${page}.html"; exit 1; }
+          done
+          grep -q 'class="mermaid"' site/diagrams/index.html
+          grep -q 'class="chart"' site/diagrams/index.html
+          grep -q 'data-cite-key' site/reference/index.html
+          grep -q '<caption' site/blocks/index.html
+          grep -q 'class="spoiler"' site/index.html
+          echo "every page built and the extension output is present"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - uses: actions/deploy-pages@v5
+        id: deployment

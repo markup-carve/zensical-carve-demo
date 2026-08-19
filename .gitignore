@@ -1,0 +1,12 @@
+site/
+.zensical/
+__pycache__/
+.venv/
+venv/
+
+# Generated from the .crv sources by `zensical-carve prepare`. The .crv files
+# are the sources; these are build output and would only ever be stale here.
+/docs/index.md
+/docs/blocks.md
+/docs/diagrams.md
+/docs/reference.md

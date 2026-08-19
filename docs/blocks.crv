@@ -1,0 +1,143 @@
+---
+title: Blocks
+description: Containers, tables, code and lists
+---
+
+# Blocks
+
+## Admonitions
+
+Seven types are known, and any other word makes a generic container.
+
+::: note "A note"
+The type word is part of the fence line, not a plugin's convention.
+:::
+
+::: warning "A warning"
+Longer fences nest shorter ones, so a container inside a container widens
+outward rather than guessing.
+:::
+
+::: tip "A tip"
+Titles are straight-quoted on the fence line.
+:::
+
+::: danger "Danger"
+The same shape carries every type.
+:::
+
+## Collapsible sections
+
+::: details "What the details extension does"
+It renders a real `<details>` and `<summary>`, so the browser does the work and
+it still prints expanded.
+:::
+
+## Tabs
+
+::: tabs
+
+::: tab [Carve]
+```
+|= Engine |= Language |
+| carve-rs | Rust |
+```
+:::
+
+::: tab [Rendered]
+Tabs come from the `tabs` extension, which builds them from radio inputs so they
+work with no JavaScript at all.
+:::
+
+:::
+
+## Tables
+
+A table marks its header cells rather than inferring them from position, aligns
+per column, spans rows and columns, and takes a caption.
+
+|= Engine    |= Language   |=> Downloads |=~ Status |
+| carve-rs   | Rust        | 69          | stable   |
+| carve-php  | PHP         | 3860        | stable   |
+| carve-js   | TypeScript  | 1683        | reference |
+| carve-rb   | Ruby        | 478         | stable   |
+^ Published Carve engines. The third column is right-aligned and the fourth centered.
+
+### A list table
+
+For cells that hold whole blocks rather than a line:
+
+::: list-table
+- - *Construct*
+  - *Why it exists*
+- - Header cells
+  - Position is not meaning
+- - Caption
+  - A table can say what it is
+:::
+
+## Code
+
+``` python "render.py" [Python]
+def fence(source, language, css_class, options, md, **kwargs):
+    """Render a ```carve block."""
+    return carve.to_html(source)
+```
+
+``` javascript [JavaScript]
+export const fence = (source) => carveToHtml(source)
+```
+
+Two blocks sharing a `[label]` become a code group, which the `code-group`
+extension turns into one tabbed widget.
+
+### Callouts
+
+``` rust
+fn main() {                     <1>
+    let doc = parse(source);    <2>
+    println!("{}", to_html(doc));
+}
+```
+
+1. Every Rust program starts here.
+2. The parse is separate from the render, which is what lets one document reach
+   HTML, Markdown, plain text and ANSI.
+
+## Lists
+
+- A bullet list
+- with a second item
+  - and a nested one
+
+1. An ordered list
+2. with a second item
+
+- [x] a finished task
+- [ ] an unfinished one
+
+:: A definition list
+:  Explicit markers, so a term is never guessed from indentation.
+
+:: A second term
+:  With its own body.
+
+## Quotations
+
+> A quotation carries an attribution line the way a table carries a caption.
+^ Someone worth quoting
+
+## Math
+
+Inline math is $`e^{i\pi} + 1 = 0`, and a display block stands alone:
+
+$$`\sum_{k=1}^{n} k = \frac{n(n+1)}{2}`
+
+## Line-significant text
+
+::: |
+Roses are red,
+  violets are blue.
+This block keeps
+    every space.
+:::

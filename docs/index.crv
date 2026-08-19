@@ -1,0 +1,67 @@
+---
+title: Carve in Zensical
+description: Every Carve construct, rendered by zensical-carve with all 32 extensions on
+---
+
+# Carve in Zensical
+
+Every page here is a `.crv` file. `zensical-carve prepare` rendered it, and all
+*32 Carve extensions* are enabled, so this is the widest surface the language
+offers rather than the default profile.
+
+::: note "What to look at"
+The left navigation is Zensical's. The table of contents on the right is
+Zensical's too, built from headings this plugin hands back to it as Markdown.
+Everything between them is Carve.
+:::
+
+## The inline set
+
+Carve's mnemonic is that the markup /looks/ like its output. Slashes lean, so
+they are italic. A star is heavier, so it is bold.
+
+|= Written |= Renders |= Markdown would say |
+| `/italic/` | /italic/ | `*italic*` |
+| `*bold*` | *bold* | `**bold**` |
+| `_underline_` | _underline_ | nothing - needs an extension |
+| `~strike~` | ~strike~ | `~~strike~~` |
+| `=highlight=` | =highlight= | nothing - needs an extension |
+| `` `code` `` | `code` | same |
+| `{^sup^}` `{,sub,}` | E = mc{^2^}, H{,2,}O | needs two extensions |
+^ The five marks Carve spells with one delimiter each.
+
+Braces are what keep superscript and subscript from firing inside a word, a
+URL, or a path. There is no bare `^x^` to go wrong.
+
+## Typography happens on its own
+
+`->` becomes ->, `<-` becomes <-, `<->` becomes <->, and `=>` becomes =>.
+Comparisons too: `!=` is !=, `<=` is <=, `>=` is >=. Then `(c)`, `(r)`, `(tm)`
+and `+-` are (c), (r), (tm) and +-, an ellipsis is ..., and dashes widen -- like
+this -- or --- like this.
+
+## Semantic spans
+
+Three names are core and four more arrive with the `semantic-span` extension:
+
+Press [Ctrl]{kbd}+[C]{kbd} to copy. The [HTML]{abbr="HyperText Markup Language"}
+specification defines [x]{var}, and a program prints [done]{samp}.
+A [dfn]{dfn="a term being defined"} carries its own definition,
+and [Dune]{cite} is a title.
+
+## Links that write themselves
+
+A cross-reference fills in its own text: </#the-inline-set>. An external link is
+<https://zensical.org> and gets its own class from the `external-links`
+extension. A footnote reads like a link.[^why]
+
+`[[Wikilinks]]` stay literal here on purpose. The extension is enabled, but a
+page name only becomes a URL through a generator the host supplies, and this
+demo supplies none - which is the taxonomy rule working, not a defect.
+
+[^why]: And resolves here, with a link back up. Footnotes are core in Carve, not an extension.
+
+## Spoilers and swatches
+
+Two small Tier-3 extensions. A spoiler hides :spoiler[the answer] until you
+hover it, and a color swatch turns a value into a chip: :color[#2563eb].

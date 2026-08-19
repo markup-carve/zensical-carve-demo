@@ -1,0 +1,55 @@
+---
+title: Reference features
+description: Numbered headings, citations, a glossary and an index
+---
+
+{#reference-features}
+# Reference features
+
+The Tier-3 set, for handbooks and specifications rather than product docs. All of
+it is off by default; this site turns everything on.
+
+## Citations
+
+Carve carries typed locators, so a citation knows that `p. 33` is a page rather
+than a string that happens to follow a comma [@knuth1984, p. 33].
+
+A group cites several works at once [@knuth1984; @lamport1994], and an integral
+citation reads as part of the sentence: +[@lamport1994] showed the same thing.
+
+[@knuth1984]: Knuth, D. E. (1984). /The TeXbook/. Addison-Wesley.
+[@lamport1994]: Lamport, L. (1994). /LaTeX: A Document Preparation System/. Addison-Wesley.
+
+## Glossary
+
+A term marks itself where it is used, and the glossary collects the definitions.
+
+A :term[parser] turns source into a tree, and a :term[renderer] turns that tree
+into an output format.
+
+::: glossary
+:: parser
+:  The pass that reads source text and produces a document tree.
+
+:: renderer
+:  The pass that walks a document tree and emits one output format.
+:::
+
+## Index
+
+An index entry marks a page position :index[markup language] without showing
+anything, and the index collects them.
+
+## Cross-references and numbering
+
+With `heading-numbers` on, sections number themselves and a cross-reference
+carries the number: </#reference-features> above, and </#citations>.
+
+## Spoilers
+
+Some documents want an answer hidden until asked for: :spoiler[the parser runs first].
+
+## Images with captions
+
+![A wide diagram placeholder](https://placehold.co/600x200/2563eb/ffffff?text=Carve)
+^ Figure #: an image with a numbered caption, referenced by its own id.

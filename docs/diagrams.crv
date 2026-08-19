@@ -1,0 +1,116 @@
+---
+title: Diagrams
+description: Eight diagram languages from fenced code blocks
+---
+
+# Diagrams
+
+Carve draws from fenced code blocks. The diagram stays plain text in the source,
+and a client library turns it into vector output. Eight languages ship as
+presets of one extension.
+
+## Mermaid
+
+``` mermaid
+flowchart LR
+  S[".crv source"] --> P["carve-lang"]
+  P --> H["HTML + Markdown headings"]
+  H --> Z["Zensical build"]
+  Z --> O["a page"]
+```
+
+``` mermaid
+sequenceDiagram
+  autonumber
+  participant A as Author
+  participant C as zensical-carve
+  participant Z as Zensical
+  A->>C: writes page.crv
+  C->>C: renders Carve
+  C->>Z: hands back headings and code as Markdown
+  Z-->>A: a page with a table of contents
+```
+
+## Chart.js
+
+``` chart
+{
+  "type": "bar",
+  "data": {
+    "labels": ["carve-rs", "carve-php", "carve-js", "carve-rb"],
+    "datasets": [{
+      "label": "downloads",
+      "data": [69, 3860, 1683, 478],
+      "backgroundColor": ["#2563eb", "#7c3aed", "#0891b2", "#dc2626"]
+    }]
+  },
+  "options": { "plugins": { "legend": { "display": false } } }
+}
+```
+
+The same numbers as the table on the Blocks page, drawn by Chart.js. This block
+carries no caption on purpose: a caption currently disables the preset and the
+diagram falls back to source (markup-carve/carve#1444).
+
+## Vega-Lite
+
+``` vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Engine downloads",
+  "data": { "values": [
+    {"engine": "carve-rs", "downloads": 69},
+    {"engine": "carve-php", "downloads": 3860},
+    {"engine": "carve-js", "downloads": 1683},
+    {"engine": "carve-rb", "downloads": 478}
+  ]},
+  "mark": "point",
+  "encoding": {
+    "x": {"field": "engine", "type": "nominal"},
+    "y": {"field": "downloads", "type": "quantitative"}
+  }
+}
+```
+
+## D2
+
+The language Zensical tracks as a change request. Carve ships it as a preset.
+
+``` d2
+source: .crv file
+engine: carve-lang
+site: Zensical
+
+source -> engine: prepare
+engine -> site: Markdown + HTML
+```
+
+## Graphviz
+
+``` dot
+digraph carve {
+  rankdir=LR;
+  node [shape=box, style=rounded];
+  spec -> "carve-rs";
+  spec -> "carve-php";
+  spec -> "carve-js";
+}
+```
+
+## The rest
+
+WaveDrom for digital timing, ABC for musical notation, and PlantUML for the full
+UML set are presets too. Each needs its own client library, so this page shows
+the markup rather than pretending the drawing happened.
+
+``` wavedrom
+{ "signal": [{ "name": "clk", "wave": "p......" }, { "name": "data", "wave": "x.34.5x" }] }
+```
+
+``` abc
+X:1
+T:A scale
+M:4/4
+K:C
+CDEF GABc |
+```
