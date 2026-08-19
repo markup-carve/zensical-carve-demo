@@ -19,8 +19,12 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
-          python-version: 3.x
-      - run: pip install zensical zensical-carve
+          python-version: "3.12"
+      # zensical-carve is not on PyPI yet, so it installs from the repo. Swap
+      # this for a plain `pip install zensical-carve` once it is released.
+      - run: |
+          pip install zensical
+          pip install "git+https://github.com/markup-carve/zensical-carve@main"
 
       # Renders every .crv page with every Carve extension enabled, then builds.
       # The extension list is read from the engine in build.sh, so a Carve
