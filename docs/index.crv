@@ -33,6 +33,18 @@ they are italic. A star is heavier, so it is bold.
 Braces are what keep superscript and subscript from firing inside a word, a
 URL, or a path. There is no bare `^x^` to go wrong.
 
+## Symbols
+
+`:smile:` renders :smile:, `:rocket:` renders :rocket:, and `:heart:` renders
+:heart:. The parsing is core Carve, but the map from a name to a glyph is a
+render option rather than an extension - a document that reaches an engine
+without one renders `:smile:` as its own source text.
+
+This site sets `emoji = "twemoji"`, so a shortcode here becomes the same
+element a Markdown page on this site gets, from Zensical's own emoji index.
+A name needs a word boundary in front of it, so `a:b:c` stays a:b:c and a time
+like 10:30: is left alone.
+
 ## Typography happens on its own
 
 `->` becomes ->, `<-` becomes <-, `<->` becomes <->, and `=>` becomes =>.

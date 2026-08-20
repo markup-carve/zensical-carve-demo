@@ -3,11 +3,17 @@
 // A FencedRender preset emits ONE hydration element and stops: `<pre class="x">`
 // for a text language, `<div class="x"><script type="application/json">` for a
 // JSON one. Turning that into a drawing is the client's job, which is what this
-// file does for the four libraries loaded on this site.
+// file does for the libraries loaded on this site.
 //
 // Written for Zensical's instant navigation: the theme swaps page content in
 // without a reload, so hydration has to run again on every swap and has to be
 // safe to run twice.
+//
+// Graphviz used to be hydrated here too, from @hpcc-js/wasm. It is drawn at
+// build time now - `prerender = ["graphviz"]` in zensical.toml runs the local
+// `dot` binary - so the page ships the SVG, no reader downloads a Graphviz
+// build, and nothing shifts when it lands. The rest stay client-side, so the
+// Diagrams page shows both.
 
 (function () {
   const done = new WeakSet()
@@ -57,34 +63,9 @@
     })
   }
 
-  async function hydrateGraphviz() {
-    // The UMD build registers itself as "@hpcc-js/wasm/graphviz" - WITH the
-    // subpath. Reading the bare package name finds nothing and the diagram
-    // silently stays source, which is how this was missed the first time.
-    const factory = window["@hpcc-js/wasm/graphviz"]
-    if (!factory || !factory.Graphviz) return
-    const nodes = Array.from(document.querySelectorAll("pre.graphviz")).filter(
-      (el) => !done.has(el),
-    )
-    if (!nodes.length) return
-    const graphviz = await factory.Graphviz.load()
-    nodes.forEach((el) => {
-      done.add(el)
-      try {
-        const svg = graphviz.dot(el.textContent)
-        const holder = document.createElement("div")
-        holder.innerHTML = svg
-        el.replaceWith(holder)
-      } catch (error) {
-        /* leave the source visible - a broken drawing is worse than none */
-      }
-    })
-  }
-
   function hydrate() {
     hydrateChart()
     hydrateVega()
-    hydrateGraphviz()
   }
 
   if (document.readyState === "loading") {

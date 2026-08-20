@@ -10,3 +10,6 @@ venv/
 /docs/blocks.md
 /docs/diagrams.md
 /docs/reference.md
+
+# Diagrams drawn at build time, cached by source and backend.
+.zensical-carve/

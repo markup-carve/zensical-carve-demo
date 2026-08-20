@@ -26,6 +26,12 @@ jobs:
           pip install zensical
           pip install "git+https://github.com/markup-carve/zensical-carve@main"
 
+      # `dot` draws the Graphviz diagram during the build - see
+      # prerender-command in zensical.toml. A local binary rather than a Kroki
+      # service, so the deploy needs no network for it and the bytes are the
+      # same every time.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends graphviz
+
       # Renders every .crv page with every Carve extension enabled, then builds.
       # The extension list is read from the engine in build.sh, so a Carve
       # release that adds one turns it on here without a change to this file.
@@ -41,6 +47,19 @@ jobs:
           done
           grep -q 'class="mermaid"' site/diagrams/index.html
           grep -q 'class="chart"' site/diagrams/index.html
+
+          # Drawn during the build, so the page ships the SVG and no longer
+          # ships the source for a client library to pick up.
+          grep -q 'carve-diagram carve-diagram-graphviz' site/diagrams/index.html
+          grep -q '<svg' site/diagrams/index.html
+          ! grep -q '<pre class="graphviz"' site/diagrams/index.html
+
+          # The symbol map is a render option; without it a shortcode renders as
+          # its own source text, which reads as "emoji are unsupported". Counted
+          # rather than merely present: the page writes each name in a code span
+          # next to the rendered one, so "the string is on the page" proves
+          # nothing here.
+          test "$(grep -o 'class="twemoji"' site/index.html | wc -l)" -ge 3
           grep -q 'data-cite-key' site/reference/index.html
           grep -q '<caption' site/blocks/index.html
           grep -q 'class="spoiler"' site/index.html
