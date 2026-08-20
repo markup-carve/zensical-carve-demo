@@ -9,6 +9,12 @@ Carve draws from fenced code blocks. The diagram stays plain text in the source,
 and a client library turns it into vector output. Eight languages ship as
 presets of one extension.
 
+Graphviz on this page is the exception: it is drawn during the build, not in
+your browser. `prerender = ["graphviz"]` in `zensical.toml` sends the source
+through the local `dot` binary and puts the SVG in the page, so nothing is
+downloaded for it and nothing shifts when it appears. The rest stay client-side
+on purpose, so the difference is visible on one page - view the source of each.
+
 ## Mermaid
 
 ``` mermaid
@@ -87,6 +93,8 @@ engine -> site: Markdown + HTML
 ```
 
 ## Graphviz
+
+Already an SVG when this page reached you.
 
 ``` dot
 digraph carve {

@@ -24,7 +24,6 @@ extra_javascript = [
   "https://cdn.jsdelivr.net/npm/vega@5",
   "https://cdn.jsdelivr.net/npm/vega-lite@5",
   "https://cdn.jsdelivr.net/npm/vega-embed@6",
-  "https://cdn.jsdelivr.net/npm/@hpcc-js/wasm@2/dist/graphviz.umd.js",
   "javascripts/mathjax-config.js",
   "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
   "javascripts/carve-hydrate.js",
@@ -129,3 +128,27 @@ pymdownx.tabbed.alternate_style = true
 pymdownx.tabbed.combine_header_slug = true
 pymdownx.tasklist.custom_checkbox = true
 pymdownx.tilde = {}
+
+# Everything zensical-carve needs, in the file the rest of the site is
+# configured in. Zensical ignores a table it does not know.
+#
+# The EXTENSION LIST is deliberately not here: build.sh reads it from the
+# engine, so a Carve release that adds one turns it on in this demo without an
+# edit. A flag beats this table, which is what makes that work.
+[tool.zensical-carve]
+# `:smile:` parses in core, but the map from a name to a glyph is a render
+# option - without one the shortcode renders as its own source text. `twemoji`
+# emits the same <img class="twemoji"> element Zensical emits for a Markdown
+# page, from Zensical's own emoji index, so the two page types match.
+emoji = "twemoji"
+
+# Draw Graphviz at build time instead of shipping @hpcc-js/wasm to every reader
+# and swapping the picture in after the page loads. The other diagram languages
+# on the Diagrams page stay client-side on purpose, so the page shows both.
+prerender = ["graphviz"]
+
+# Through the local `dot` binary rather than a Kroki service: the deploy then
+# needs no network for it, produces the same bytes every time, and the demo
+# shows the backend that sends nothing anywhere.
+[tool.zensical-carve.prerender-command]
+graphviz = "dot -Tsvg {input}"
