@@ -4,18 +4,31 @@ on:
     branches:
       - master
       - main
+  # A pull request builds the site and runs every check below, and stops there:
+  # the deploy steps are guarded on a push. Without this the only thing that
+  # ever ran the checks was the merge, so a change that broke a page was
+  # discovered on the live site.
+  pull_request:
+# The default for every job. Writing to Pages and minting an OIDC token are
+# granted to the deploy job alone: a pull request runs project code - build.sh,
+# the plugin, whatever a dependency does at install time - and that code has no
+# business holding a deployment credential.
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    name: Build the site and check what it rendered
+    permissions:
+      contents: read
+      # configure-pages reads the repository's Pages settings on a push. Read,
+      # not write: this job runs project code, and the credential that can
+      # publish belongs to the job that publishes.
+      pages: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/configure-pages@v6
+        if: github.event_name == 'push'
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
@@ -65,7 +78,24 @@ jobs:
           grep -q 'class="spoiler"' site/index.html
           echo "every page built and the extension output is present"
       - uses: actions/upload-pages-artifact@v5
+        if: github.event_name == 'push'
         with:
           path: site
+
+  # Split from the build so a pull request can run every check above without
+  # touching the Pages environment, which only a push may write to.
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: [build]
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/deploy-pages@v5
         id: deployment
