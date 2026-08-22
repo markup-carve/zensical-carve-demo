@@ -85,10 +85,6 @@ each one, and those are gitignored - regenerate rather than edit them.
   schemes work. It also hides Carve's heading permalinks, because with every
   extension on both Carve and the theme add one.
 
-## License
-
-MIT
-
 [carve]: https://markup-carve.github.io/carve/
 [zensical]: https://zensical.org/
 [plugin]: https://github.com/markup-carve/zensical-carve
