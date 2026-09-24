@@ -21,16 +21,16 @@ Zensical is the successor to MkDocs and Material for MkDocs, from the same team.
 ## Build it yourself
 
 ```bash
-pip install zensical
-pip install "git+https://github.com/markup-carve/zensical-carve@main"
+pip install -r requirements.txt
 sudo apt-get install graphviz   # `dot` draws one diagram at build time
 ./build.sh                      # renders every .crv, then builds
 zensical serve                  # or preview at localhost:8000
 ```
 
-zensical-carve is not on PyPI yet, so it installs from the repository - the
-deploy workflow does the same. Swap both for `pip install zensical-carve` once
-it is released.
+`requirements.txt` pins the engine, Zensical and the plugin to exact versions,
+and the deploy workflow installs the same file: what you build is what the site
+was built from. Renovate proposes each bump as a pull request, so the demo's
+checks run against a new version before it reaches the live site.
 
 `build.sh` reads the extension list from the engine rather than hard-coding it,
 so a Carve release that adds an extension turns it on here on the next build.
