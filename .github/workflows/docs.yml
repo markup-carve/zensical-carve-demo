@@ -9,6 +9,12 @@ on:
   # ever ran the checks was the merge, so a change that broke a page was
   # discovered on the live site.
   pull_request:
+  # The pins make a build reproducible, which also means a push is the only
+  # thing that ever re-runs it. Zensical's own dependencies still float, and so
+  # does the Pages path, so a weekly run bounds how long the demo can sit broken
+  # with nobody looking: it was a month last time.
+  schedule:
+    - cron: "0 5 * * 1"
 # The default for every job. Writing to Pages and minting an OIDC token are
 # granted to the deploy job alone: a pull request runs project code - build.sh,
 # the plugin, whatever a dependency does at install time - and that code has no
@@ -33,11 +39,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      # zensical-carve is not on PyPI yet, so it installs from the repo. Swap
-      # this for a plain `pip install zensical-carve` once it is released.
-      - run: |
-          pip install zensical
-          pip install "git+https://github.com/markup-carve/zensical-carve@main"
+      - run: pip install -r requirements.txt
 
       # `dot` draws the Graphviz diagram during the build - see
       # prerender-command in zensical.toml. A local binary rather than a Kroki

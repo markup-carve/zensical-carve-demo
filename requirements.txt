@@ -1,0 +1,11 @@
+# Pinned so a build is reproducible from the commit, and so a version bump
+# arrives as a Renovate pull request that runs the demo's checks before it
+# lands. build.sh still reads the extension list from whichever engine these
+# resolve to, so a Carve release that adds one turns it on in that pull request.
+carve-lang==0.1.5
+zensical==0.0.64
+# Temporarily a commit pin, not a release: 0.1.1 predates the prerender fix
+# (markup-carve/zensical-carve#20), so the diagram checks below cannot pass on
+# it. Nothing watches a commit pin for staleness - swap it back to a version
+# the moment one ships past 7e59f09.
+zensical-carve @ git+https://github.com/markup-carve/zensical-carve@7e59f09db2830341e262eb625755f4b98e47e750
