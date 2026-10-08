@@ -2,7 +2,7 @@
 # arrives as a Renovate pull request that runs the demo's checks before it
 # lands. build.sh still reads the extension list from whichever engine these
 # resolve to, so a Carve release that adds one turns it on in that pull request.
-carve-lang==0.1.5
+carve-lang==0.1.7
 zensical==0.0.64
 # Temporarily a commit pin, not a release: 0.1.1 predates the prerender fix
 # (markup-carve/zensical-carve#20), so the diagram checks below cannot pass on
