@@ -63,7 +63,7 @@ and [Dune]{cite} is a title.
 
 ## Links that write themselves
 
-A cross-reference fills in its own text: </#the-inline-set>. An external link is
+A cross-reference fills in its own text: </#The-inline-set>. An external link is
 <https://zensical.org> and gets its own class from the `external-links`
 extension. A footnote reads like a link.[^why]
 
