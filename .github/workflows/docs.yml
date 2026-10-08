@@ -51,6 +51,25 @@ jobs:
       # same every time.
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends graphviz
 
+      # A cross-reference whose target differs only in case renders as its own
+      # literal source text. The page still builds and every grep below still
+      # passes, so the only thing that observes this class of defect is the
+      # linter - which is why it runs before the build rather than after.
+      - name: Lint every source page
+        run: |
+          set -euo pipefail
+          python3 - docs/*.crv <<'EOF'
+          import sys, carve
+          bad = 0
+          for path in sys.argv[1:]:
+              for d in carve.lint(open(path, encoding="utf-8").read()) or []:
+                  print(f"{path}:{d['line']}:{d['column']}: {d['rule']}: {d['message']}")
+                  bad += 1
+          if bad:
+              sys.exit(f"{bad} diagnostic(s)")
+          print("every source page lints clean")
+          EOF
+
       # Renders every .crv page with every Carve extension enabled, then builds.
       # The extension list is read from the engine in build.sh, so a Carve
       # release that adds one turns it on here without a change to this file.
@@ -79,6 +98,13 @@ jobs:
           # next to the rendered one, so "the string is on the page" proves
           # nothing here.
           test "$(grep -o 'class="twemoji"' site/index.html | wc -l)" -ge 3
+          # Each page carries a cross-reference. Asserted as a rendered anchor
+          # whose text the engine filled in, because the failure mode is the
+          # source text surviving into the page, which no other check sees.
+          grep -q '<a href="#The-inline-set">Section 1.1 - The inline set</a>' site/index.html
+          grep -q '<a href="#Citations">Section 1.1 - Citations</a>' site/reference/index.html
+          ! grep -qE '&lt;/#[A-Za-z]' site/index.html site/reference/index.html
+
           grep -q 'data-cite-key' site/reference/index.html
           grep -q '<caption' site/blocks/index.html
           grep -q 'class="spoiler"' site/index.html
