@@ -107,6 +107,8 @@ jobs:
 
           grep -q 'data-cite-key' site/reference/index.html
           grep -q '<caption' site/blocks/index.html
+          grep -q '<td>carve-py, the binding</td>' site/blocks/index.html
+          ! grep -q '<p>+</p>' site/blocks/index.html
           grep -q 'class="spoiler"' site/index.html
           echo "every page built and the extension output is present"
       - uses: actions/upload-pages-artifact@v5
