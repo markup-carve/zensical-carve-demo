@@ -13,7 +13,7 @@ Zensical is the successor to MkDocs and Material for MkDocs, from the same team.
 | Page | Source | Shows |
 | --- | --- | --- |
 | The inline set | [`docs/index.crv`](docs/index.crv) | the inline marks against their Markdown spellings, symbols as twemoji, automatic typography, semantic spans, a spoiler, a color swatch |
-| Blocks | [`docs/blocks.crv`](docs/blocks.crv) | admonitions, a collapsible section, tabs, a table with header cells and a caption, a list table, a code group, code callouts, math, a line block |
+| Blocks | [`docs/blocks.crv`](docs/blocks.crv) | admonitions, a collapsible section, tabs, a table with header cells and a caption, a CSV table, a list table, a `+` continuation marker, a code group, code callouts, math, a line block |
 | Diagrams | [`docs/diagrams.crv`](docs/diagrams.crv) | Graphviz drawn at build time; Mermaid, Chart.js, Vega-Lite and D2 drawing in the browser; WaveDrom and ABC as source |
 | Markdown, for contrast | [`docs/markdown.md`](docs/markdown.md) | the same constructs in Markdown plus the 22 extensions `zensical new` enables |
 | Reference features | [`docs/reference.crv`](docs/reference.crv) | citations with typed locators, a glossary, an index entry, numbered headings, a captioned figure |

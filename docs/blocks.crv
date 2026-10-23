@@ -63,6 +63,19 @@ per column, spans rows and columns, and takes a caption.
 | carve-rb   | Ruby        | 478         | stable   |
 ^ Published Carve engines. The third column is right-aligned and the fourth centered.
 
+### CSV and TSV data
+
+A `{table}` flag above a `csv` or `tsv` fence turns its records into a table.
+The first record is the header, and RFC 4180 quoting lets a field hold a comma.
+
+{table}
+```csv
+Engine,Package,Registry
+carve-rs,carve,crates.io
+carve-php,markup-carve/carve-php,Packagist
+"carve-py, the binding",carve-lang,PyPI
+```
+
 ### A list table
 
 For cells that hold whole blocks rather than a line:
@@ -115,6 +128,11 @@ fn main() {                     <1>
 
 - [x] a finished task
 - [ ] an unfinished one
+
+- A lone plus attaches the next block to this item
++
+> This quote belongs to the item above, with no indentation.
+- and the list stays tight
 
 :: A definition list
 :  Explicit markers, so a term is never guessed from indentation.
