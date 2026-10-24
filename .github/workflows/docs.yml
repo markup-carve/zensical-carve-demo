@@ -74,6 +74,7 @@ jobs:
       # The extension list is read from the engine in build.sh, so a Carve
       # release that adds one turns it on here without a change to this file.
       - run: ./build.sh
+      - run: python3 scripts/check-delimited.py
 
       # A build that produces no pages still exits 0, and a missing extension
       # only shows as absent output. Both would deploy a quietly broken site.

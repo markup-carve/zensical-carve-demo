@@ -4,4 +4,5 @@
 # resolve to, so a Carve release that adds one turns it on in that pull request.
 carve-lang==0.1.10
 zensical==0.0.64
-zensical-carve==0.1.4
+zensical-carve==0.1.5
+pygments-carve==0.1.3
