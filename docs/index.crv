@@ -1,6 +1,6 @@
 ---
 title: Carve in Zensical
-description: Every Carve construct, rendered by zensical-carve with all 32 extensions on
+description: Every Carve construct, rendered by zensical-carve with every extension except tab-normalize
 ---
 
 # Carve in Zensical

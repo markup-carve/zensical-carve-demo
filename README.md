@@ -2,7 +2,7 @@
 
 A [Zensical][zensical] documentation site whose pages are written in
 [Carve][carve] instead of Markdown, built by [zensical-carve][plugin] with
-**every Carve extension enabled**.
+all Carve extensions except `tab-normalize`, which would turn TSV code separators into spaces.
 
 **→ [markup-carve.github.io/zensical-carve-demo](https://markup-carve.github.io/zensical-carve-demo/)**
 
