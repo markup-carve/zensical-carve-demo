@@ -91,6 +91,19 @@ For cells that hold whole blocks rather than a line:
 
 ## Code
 
+These delimited fences are code examples. The separators have their own highlight color.
+
+```csv
+name,language
+Carve,markup
+```
+
+```tsv
+name	language
+Carve	markup
+```
+
+
 ``` python "render.py" [Python]
 def fence(source, language, css_class, options, md, **kwargs):
     """Render a ```carve block."""
