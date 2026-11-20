@@ -18,6 +18,7 @@ A group cites several works at once [@knuth1984; @lamport1994], and an integral
 citation reads as part of the sentence: +[@lamport1994] showed the same thing.
 
 [@knuth1984]: Knuth, D. E. (1984). /The TeXbook/. Addison-Wesley.
+
 [@lamport1994]: Lamport, L. (1994). /LaTeX: A Document Preparation System/. Addison-Wesley.
 
 ## Glossary

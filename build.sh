@@ -1,19 +1,27 @@
 #!/usr/bin/env bash
-# Build the demo with Carve extensions that preserve literal TSV separators.
+# Build the demo with every Carve 0.2 standard extension that renders a page.
 #
-# The list is read from the engine rather than written down here, so a Carve
-# release that adds an extension turns it on here, except tab-normalize, and a
-# release that removes one cannot leave a stale name behind that fails the build.
+# Carve 0.2's carve.extensions() lists only five names (carve-py#140), so the
+# list is written down: the carve-rs standard extensions, less
+# carve.tabNormalize, which expands literal TSV separators before Pygments can
+# see them, and carve.inlineFootnotesToParentheses, which rewrites footnotes.
 #
 # Everything that is NOT the list lives in [tool.zensical-carve] in
-# zensical.toml: the emoji map, and drawing Graphviz at build time. A flag beats
-# that table, which is exactly why the list can stay dynamic here.
+# zensical.toml: the emoji map, and drawing Graphviz at build time.
 set -euo pipefail
 
-# tab-normalize expands literal TSV separators before Pygments can see them.
-EXTENSIONS=$(python3 -c "import carve; print(' '.join(f'--extension {name}' for name in carve.extensions() if name != 'tab-normalize'))")
-echo "Enabling $(python3 -c "import carve; print(sum(name != 'tab-normalize' for name in carve.extensions()))") Carve extensions"
+NAMES=(
+  carve.details carve.spoiler carve.spoilerBlock carve.tabs
+  carve.codeGroup carve.codeCallouts carve.listTable carve.mathBlock
+  carve.fencedRender.mermaid carve.fencedRender.chart carve.fencedRender.vega-lite
+  carve.fencedRender.d2 carve.fencedRender.graphviz carve.fencedRender.dot carve.fencedRender.wavedrom
+  carve.fencedRender.abc carve.fencedRender.plantuml carve.fencedRender.puml
+  carve.semanticSpan carve.smartQuotes carve.colorSwatch carve.wiki
+  carve.references carve.glossary carve.index carve.imgFence.img carve.imgFence.image
+)
+EXTENSIONS=()
+for name in "${NAMES[@]}"; do EXTENSIONS+=(--extension "$name"); done
+echo "Enabling ${#NAMES[@]} Carve extensions"
 
-# shellcheck disable=SC2086
-zensical-carve prepare --force $EXTENSIONS
+zensical-carve prepare --force "${EXTENSIONS[@]}"
 zensical build

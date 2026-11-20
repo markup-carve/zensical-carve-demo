@@ -59,10 +59,11 @@ jobs:
         run: |
           set -euo pipefail
           python3 - docs/*.crv <<'EOF'
-          import sys, carve
+          import sys
+          from zensical_carve import lint
           bad = 0
           for path in sys.argv[1:]:
-              for d in carve.lint(open(path, encoding="utf-8").read()) or []:
+              for d in lint(open(path, encoding="utf-8").read()):
                   print(f"{path}:{d['line']}:{d['column']}: {d['rule']}: {d['message']}")
                   bad += 1
           if bad:
@@ -70,9 +71,8 @@ jobs:
           print("every source page lints clean")
           EOF
 
-      # Renders every .crv page with every Carve extension enabled, then builds.
-      # The extension list is read from the engine in build.sh, so a Carve
-      # release that adds one turns it on here without a change to this file.
+      # Renders every .crv page with the Carve 0.2 standard extensions that
+      # build.sh lists, then builds.
       - run: ./build.sh
       - run: python3 scripts/check-delimited.py
 
