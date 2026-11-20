@@ -1,19 +1,30 @@
 #!/usr/bin/env bash
-# Build the demo with Carve extensions that preserve literal TSV separators.
+# Build the demo with every Carve 0.2 standard extension that renders a page.
 #
-# The list is read from the engine rather than written down here, so a Carve
-# release that adds an extension turns it on here, except tab-normalize, and a
-# release that removes one cannot leave a stale name behind that fails the build.
+# The list is read from the engine rather than written down here, so an engine
+# that adds an extension turns it on here, and one that removes a name cannot
+# leave a stale name behind that fails the build. Left out:
+# carve.tabNormalize, which expands literal TSV separators before Pygments can
+# see them, and carve.inlineFootnotesToParentheses, which rewrites footnotes.
+# Added: the dot and puml fence words, which 0.1 graphviz and plantuml claimed.
 #
 # Everything that is NOT the list lives in [tool.zensical-carve] in
 # zensical.toml: the emoji map, and drawing Graphviz at build time. A flag beats
 # that table, which is exactly why the list can stay dynamic here.
 set -euo pipefail
 
-# tab-normalize expands literal TSV separators before Pygments can see them.
-EXTENSIONS=$(python3 -c "import carve; print(' '.join(f'--extension {name}' for name in carve.extensions() if name != 'tab-normalize'))")
-echo "Enabling $(python3 -c "import carve; print(sum(name != 'tab-normalize' for name in carve.extensions()))") Carve extensions"
+mapfile -t NAMES < <(python3 -c '
+import carve
+skip = {"carve.tabNormalize", "carve.inlineFootnotesToParentheses"}
+for name in carve.extensions():
+    if name not in skip:
+        print(name)
+print("carve.fencedRender.dot")
+print("carve.fencedRender.puml")
+')
+EXTENSIONS=()
+for name in "${NAMES[@]}"; do EXTENSIONS+=(--extension "$name"); done
+echo "Enabling ${#NAMES[@]} Carve extensions"
 
-# shellcheck disable=SC2086
-zensical-carve prepare --force $EXTENSIONS
+zensical-carve prepare --force "${EXTENSIONS[@]}"
 zensical build

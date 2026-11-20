@@ -11,14 +11,20 @@ it is off by default; this site turns everything on.
 
 ## Citations
 
-Carve carries typed locators, so a citation knows that `p. 33` is a page rather
-than a string that happens to follow a comma [@knuth1984, p. 33].
+A citation carries its locator as an attribute, so it knows that `p. 33` is a
+page rather than a string that happens to follow a comma
+:cite[knuth1984]{locator="p. 33"}.
 
-A group cites several works at once [@knuth1984; @lamport1994], and an integral
-citation reads as part of the sentence: +[@lamport1994] showed the same thing.
+A group cites several works at once :cite[knuth1984; lamport1994], and the
+references list below holds every entry in source order.
 
-[@knuth1984]: Knuth, D. E. (1984). /The TeXbook/. Addison-Wesley.
-[@lamport1994]: Lamport, L. (1994). /LaTeX: A Document Preparation System/. Addison-Wesley.
+::: references
+:: knuth1984
+: Knuth, D. E. (1984). /The TeXbook/. Addison-Wesley.
+
+:: lamport1994
+: Lamport, L. (1994). /LaTeX: A Document Preparation System/. Addison-Wesley.
+:::
 
 ## Glossary
 

@@ -5,9 +5,9 @@ description: Every Carve construct, rendered by zensical-carve with every extens
 
 # Carve in Zensical
 
-Every page here is a `.crv` file. `zensical-carve prepare` rendered it, and all
-*32 Carve extensions* are enabled, so this is the widest surface the language
-offers rather than the default profile.
+Every page here is a `.crv` file. `zensical-carve prepare` rendered it, and
+*every Carve extension the engine lists* is enabled, so this is the widest
+surface the language offers rather than the default profile.
 
 ::: note "What to look at"
 The left navigation is Zensical's. The table of contents on the right is
@@ -23,9 +23,9 @@ they are italic. A star is heavier, so it is bold.
 |= Written |= Renders |= Markdown would say |
 | `/italic/` | /italic/ | `*italic*` |
 | `*bold*` | *bold* | `**bold**` |
-| `_underline_` | _underline_ | nothing - needs an extension |
-| `~strike~` | ~strike~ | `~~strike~~` |
-| `=highlight=` | =highlight= | nothing - needs an extension |
+| `_underline_` | {_underline_} | nothing - needs an extension |
+| `~strike~` | {~strike~} | `~~strike~~` |
+| `=highlight=` | {=highlight=} | nothing - needs an extension |
 | `` `code` `` | `code` | same |
 | `{^sup^}` `{,sub,}` | E = mc{^2^}, H{,2,}O | needs two extensions |
 ^ The five marks Carve spells with one delimiter each.
@@ -48,6 +48,7 @@ like 10:30: is left alone.
 ## Typography happens on its own
 
 `->` becomes ->, `<-` becomes <-, `<->` becomes <->, and `=>` becomes =>.
+
 Comparisons too: `!=` is !=, `<=` is <=, `>=` is >=. Then `(c)`, `(r)`, `(tm)`
 and `+-` are (c), (r), (tm) and +-, an ellipsis is ..., and dashes widen -- like
 this -- or --- like this.

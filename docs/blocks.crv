@@ -37,14 +37,14 @@ it still prints expanded.
 
 ::: tabs
 
-::: tab [Carve]
+::: tab "Carve"
 ```
 |= Engine |= Language |
 | carve-rs | Rust |
 ```
 :::
 
-::: tab [Rendered]
+::: tab "Rendered"
 Tabs come from the `tabs` extension, which builds them from radio inputs so they
 work with no JavaScript at all.
 :::
@@ -56,7 +56,7 @@ work with no JavaScript at all.
 A table marks its header cells rather than inferring them from position, aligns
 per column, spans rows and columns, and takes a caption.
 
-|= Engine    |= Language   |=> Downloads |=~ Status |
+|= Engine    |= Language   |={>} Downloads |={~} Status |
 | carve-rs   | Rust        | 69          | stable   |
 | carve-php  | PHP         | 3860        | stable   |
 | carve-js   | TypeScript  | 1683        | reference |
@@ -142,9 +142,11 @@ fn main() {                     <1>
 - [x] a finished task
 - [ ] an unfinished one
 
+
+
 - A lone plus attaches the next block to this item
-+
-> This quote belongs to the item above, with no indentation.
+
+  > This quote belongs to the item above, with no indentation.
 - and the list stays tight
 
 :: A definition list
