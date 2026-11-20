@@ -4,5 +4,5 @@
 # lands.
 carve-lang @ git+https://github.com/markup-carve/carve-py@8444f42cb4c2a73517be9781144f57d8fff5960d
 zensical==0.0.64
-zensical-carve @ git+https://github.com/markup-carve/zensical-carve@21b5c106bce9cf5035884d5634b2764ac18e7bcd
+zensical-carve @ git+https://github.com/markup-carve/zensical-carve@359cf5c92726c6b3592a04afcf85aa76d1440d53
 pygments-carve @ git+https://github.com/markup-carve/pygments-carve@4552be4e63550c0d03f4173f25ec2802048e39a0
