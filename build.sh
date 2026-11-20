@@ -5,9 +5,7 @@
 # that adds an extension turns it on here, and one that removes a name cannot
 # leave a stale name behind that fails the build. Left out:
 # carve.tabNormalize, which expands literal TSV separators before Pygments can
-# see them, carve.inlineFootnotesToParentheses, which rewrites footnotes, and
-# carve.cite, since carve.references claims :cite itself and the two together
-# render every citation empty (markup-carve/carve-rs#4485).
+# see them, and carve.inlineFootnotesToParentheses, which rewrites footnotes.
 # Added: the dot and puml fence words, which 0.1 graphviz and plantuml claimed.
 #
 # Everything that is NOT the list lives in [tool.zensical-carve] in
@@ -17,7 +15,7 @@ set -euo pipefail
 
 mapfile -t NAMES < <(python3 -c '
 import carve
-skip = {"carve.tabNormalize", "carve.inlineFootnotesToParentheses", "carve.cite"}
+skip = {"carve.tabNormalize", "carve.inlineFootnotesToParentheses"}
 for name in carve.extensions():
     if name not in skip:
         print(name)

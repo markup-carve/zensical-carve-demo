@@ -33,15 +33,11 @@ On the `next2` branch (Carve 0.2) the engine and the plugin are unreleased, so
 they are pinned to git commits and pip builds the engine from source, which needs
 Rust 1.88 or newer.
 
-`build.sh` lists the Carve 0.2 standard extensions it enables. Carve 0.2's
-`carve.extensions()` names only five of them, so the list cannot be read from the
-engine yet.
+`build.sh` enables the Carve 0.2 standard extensions listed by the engine,
+apart from the two transforms the demo deliberately leaves out.
 
-Two features of the 0.1 demo are missing on `next2`: numbered headings and the
-numbered cross-reference text wait on the carve-rs navigation extensions
-([carve-rs#4476](https://github.com/markup-carve/carve-rs/issues/4476)), and the
-reference page still writes its citations in the 0.1 `[@key]` form, which Carve
-0.2 reads as a mention.
+The reference page still writes its citations in the 0.1 `[@key]` form, which
+Carve 0.2 reads as a mention.
 Everything that is not the list is configured in `zensical.toml`, in a
 `[tool.zensical-carve]` table Zensical itself ignores:
 

@@ -2,7 +2,7 @@
 # Carve 0.2 engine and plugin are git commits), and so a version bump
 # arrives as a Renovate pull request that runs the demo's checks before it
 # lands.
-carve-lang @ git+https://github.com/markup-carve/carve-py@ae2988d4b3443836fc51a3c4a719a7bbd4166cde
+carve-lang @ git+https://github.com/markup-carve/carve-py@791e2061eb949b3fdc6193892814e31ccb1f3e07
 zensical==0.0.64
 zensical-carve @ git+https://github.com/markup-carve/zensical-carve@5ac93df923342cf6587991ba1a4d53ce222b9dfa
 pygments-carve==0.1.3
