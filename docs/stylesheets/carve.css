@@ -240,6 +240,15 @@
 /* --- Math ------------------------------------------------------------------
  * The math-block extension emits a span for both forms, so the display one has
  * to be told it is a block or it sits inline with the paragraph around it. */
+/* The theme floats `.inline` (its inline admonitions), which the inline form's
+ * class also matches, so the formula left its sentence. */
+[dir] .md-typeset .math.inline {
+  display: inline;
+  float: none;
+  width: auto;
+  margin: 0;
+}
+
 .md-typeset .math.display {
   display: block;
   text-align: center;

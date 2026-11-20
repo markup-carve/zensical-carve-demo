@@ -5,9 +5,9 @@ description: Every Carve construct, rendered by zensical-carve with every extens
 
 # Carve in Zensical
 
-Every page here is a `.crv` file. `zensical-carve prepare` rendered it, and all
-*32 Carve extensions* are enabled, so this is the widest surface the language
-offers rather than the default profile.
+Every page here is a `.crv` file. `zensical-carve prepare` rendered it, and
+*every Carve extension the engine lists* is enabled, so this is the widest
+surface the language offers rather than the default profile.
 
 ::: note "What to look at"
 The left navigation is Zensical's. The table of contents on the right is

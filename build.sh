@@ -1,24 +1,29 @@
 #!/usr/bin/env bash
 # Build the demo with every Carve 0.2 standard extension that renders a page.
 #
-# Carve 0.2's carve.extensions() lists only five names (carve-py#140), so the
-# list is written down: the carve-rs standard extensions, less
+# The list is read from the engine rather than written down here, so an engine
+# that adds an extension turns it on here, and one that removes a name cannot
+# leave a stale name behind that fails the build. Left out:
 # carve.tabNormalize, which expands literal TSV separators before Pygments can
-# see them, and carve.inlineFootnotesToParentheses, which rewrites footnotes.
+# see them, carve.inlineFootnotesToParentheses, which rewrites footnotes, and
+# carve.cite, since carve.references claims :cite itself and the two together
+# render every citation empty (markup-carve/carve-rs#4485).
+# Added: the dot and puml fence words, which 0.1 graphviz and plantuml claimed.
 #
 # Everything that is NOT the list lives in [tool.zensical-carve] in
-# zensical.toml: the emoji map, and drawing Graphviz at build time.
+# zensical.toml: the emoji map, and drawing Graphviz at build time. A flag beats
+# that table, which is exactly why the list can stay dynamic here.
 set -euo pipefail
 
-NAMES=(
-  carve.details carve.spoiler carve.spoilerBlock carve.tabs
-  carve.codeGroup carve.codeCallouts carve.listTable carve.mathBlock
-  carve.fencedRender.mermaid carve.fencedRender.chart carve.fencedRender.vega-lite
-  carve.fencedRender.d2 carve.fencedRender.graphviz carve.fencedRender.dot carve.fencedRender.wavedrom
-  carve.fencedRender.abc carve.fencedRender.plantuml carve.fencedRender.puml
-  carve.semanticSpan carve.smartQuotes carve.colorSwatch carve.wiki
-  carve.references carve.glossary carve.index carve.imgFence.img carve.imgFence.image
-)
+mapfile -t NAMES < <(python3 -c '
+import carve
+skip = {"carve.tabNormalize", "carve.inlineFootnotesToParentheses", "carve.cite"}
+for name in carve.extensions():
+    if name not in skip:
+        print(name)
+print("carve.fencedRender.dot")
+print("carve.fencedRender.puml")
+')
 EXTENSIONS=()
 for name in "${NAMES[@]}"; do EXTENSIONS+=(--extension "$name"); done
 echo "Enabling ${#NAMES[@]} Carve extensions"
