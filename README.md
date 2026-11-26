@@ -29,8 +29,8 @@ zensical serve                  # or preview at localhost:8000
 
 `requirements.txt` pins the engine, Zensical and the plugin, and the deploy
 workflow installs the same file: what you build is what the site was built from.
-On the `next2` branch (Carve 0.2) the engine and the plugin are unreleased, so
-they are pinned to git commits and pip builds the engine from source, which needs
+On `main` (Carve 0.2) the engine and the plugin are unreleased, so they are
+pinned to git commits and pip builds the engine from source, which needs
 Rust 1.88 or newer.
 
 `build.sh` enables the Carve 0.2 standard extensions listed by the engine,
