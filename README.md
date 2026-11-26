@@ -27,13 +27,17 @@ sudo apt-get install graphviz   # `dot` draws one diagram at build time
 zensical serve                  # or preview at localhost:8000
 ```
 
-`requirements.txt` pins the engine, Zensical and the plugin to exact versions,
-and the deploy workflow installs the same file: what you build is what the site
-was built from. Renovate proposes each bump as a pull request, so the demo's
-checks run against a new version before it reaches the live site.
+`requirements.txt` pins the engine, Zensical and the plugin, and the deploy
+workflow installs the same file: what you build is what the site was built from.
+On the `next2` branch (Carve 0.2) the engine and the plugin are unreleased, so
+they are pinned to git commits and pip builds the engine from source, which needs
+Rust 1.88 or newer.
 
-`build.sh` reads the extension list from the engine rather than hard-coding it,
-so a Carve release that adds an extension turns it on here on the next build.
+`build.sh` enables the Carve 0.2 standard extensions listed by the engine,
+apart from the two transforms the demo deliberately leaves out.
+
+The reference page still writes its citations in the 0.1 `[@key]` form, which
+Carve 0.2 reads as a mention.
 Everything that is not the list is configured in `zensical.toml`, in a
 `[tool.zensical-carve]` table Zensical itself ignores:
 
