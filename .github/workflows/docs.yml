@@ -40,9 +40,6 @@ jobs:
       - uses: actions/configure-pages@v6
         if: github.event_name == 'push'
       - uses: actions/checkout@v7
-        with:
-          # build from 0.1 until 0.2.0 is released
-          ref: ${{ github.event_name != 'pull_request' && '0.1' || '' }}
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
